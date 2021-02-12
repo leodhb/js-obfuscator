@@ -1,6 +1,11 @@
 
-        let input = document.querySelector('#scriptOriginal');
-        var editorInput = CodeMirror.fromTextArea(input, {
+        //selecionar TextAreas
+        const input  = document.querySelector('#scriptOriginal');
+        const output = document.querySelector('#scriptOfuscado');
+
+
+        //Carregar editores nos TextAreas
+        const editorInput = CodeMirror.fromTextArea(input, {
             lineNumbers: true,
             mode: 'javascript',
             autocapitalize: true,
@@ -9,8 +14,7 @@
             lineWrapping: true
         });
 
-        let output = document.querySelector('#scriptOfuscado');
-        var editorOutput = CodeMirror.fromTextArea(output, {
+        const editorOutput = CodeMirror.fromTextArea(output, {
             lineNumbers: true,
             mode: 'javascript',
             autocapitalize: true,
@@ -19,11 +23,13 @@
             lineWrapping: true
         });
 
+
+        //Setar o editor do Código ofuscado como RO
         editorOutput.setOption("readOnly", true);
 
-
         $(document).ready(function() {
-
+            
+            //Conjunto de funçoes para copiar para o clipboard
             new Clipboard('#copiar', {
                 text: function(trigger) {
                     $('#copiar').text('Copiado!');
@@ -31,9 +37,8 @@
                 }
             });
 
-            // Retrieve a CodeMirror Instance via native JavaScript.
-            function getCodeMirrorNative(target) {
-                var _target = target;
+            const getCodeMirrorNative = (target) => {
+                let _target = target;
                 if (typeof _target === 'string') {
                     _target = document.querySelector(_target);
                 }
@@ -53,9 +58,11 @@
             };
 
 
+            //açao do botao ofuscar
             $("#ofuscar").on("click", function() {
-                 const txt_encoded = Base64.encode(editorInput.getValue());
+                const txt_encoded = Base64.encode(editorInput.getValue());
 
+                //requisiçao ao PHP
                 $.ajax({
                     url: "backend/ajax.php",
                     type: "post",
@@ -63,9 +70,11 @@
                         code: txt_encoded
                     },
                     success: function (response) {
+                        //Tratamento da resposta
                         const txt_decoded = Base64.decode(response);
                         editorOutput.setValue(txt_decoded);
                     },
+                    //Se der ruim
                     error: function(jqXHR, textStatus, errorThrown) {
                     console.log(textStatus, errorThrown);
                     }
