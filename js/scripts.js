@@ -28,7 +28,7 @@
         editorOutput.setOption("readOnly", true);
 
         $(document).ready(function() {
-            
+
             //Conjunto de funçoes para copiar para o clipboard
             new Clipboard('#copiar', {
                 text: function(trigger) {
@@ -61,6 +61,8 @@
             //açao do botao ofuscar
             $("#ofuscar").on("click", function() {
                 const txt_encoded = Base64.encode(editorInput.getValue());
+
+                editorOutput.setValue('Perai rapidao...');
 
                 //requisiçao ao PHP
                 $.ajax({
