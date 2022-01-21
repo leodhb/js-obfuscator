@@ -1,95 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Javascript Obfuscator</title>
-    <script src="js/jquery-3.5.1.min.js" ></script>
-    <script src="js/base64.js" ></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="syntax/lib/codemirror.css">
-    <script src="syntax/lib/codemirror.js"></script>
-    <script src="syntax/mode/javascript/javascript.js"></script>
-    <script src="syntax/addon/edit/closetag.js"></script>
-    <script src="syntax/addon/edit/closebrackets.js"></script>
-    <script src="syntax/addon/wrap/hardwrap.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.0/clipboard.min.js" integrity="sha512-iJh0F10blr9SC3d0Ow1ZKHi9kt12NYa+ISlmCdlCdNZzFwjH1JppRTeAnypvUez01HroZhAmP4ro4AvZ/rG0UQ==" crossorigin="anonymous"></script>
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Tania Rascia</title>
+    <meta name="description" content="Ofuscando javascript simples e rápido" />
 
+    <meta property="og:url" content="https://leodhb.github.io/js-obfuscator" />
+    <meta property="og:title" content="Javascript Obfuscator" />
+    <meta
+      property="og:description"
+      content="Ofuscando javascript simples e rápido"
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Javascript Obfuscator" />
+    <meta
+      name="twitter:description"
+      content="Ofuscando javascript simples e rápido"
+    />
+    <script type="application/ld+json">
+      [
+        {
+          "@context": "http://schema.org",
+          "@type": "WebSite",
+          "url": "https://leodhb.github.io/js-obfuscator",
+          "name": "Javascript Obfuscator",
+          "alternateName": "Javascript Obfuscator"
+        }
+      ]
+    </script>
 
-</head>
-<body>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/codemirror.css" />
+
+    <script src="js/lib/CodeMirror/codemirror.js"></script>
+    <script src="js/lib/CodeMirror/mode/javascript/javascript.js"></script>
+    <script src="js/lib/CodeMirror/addon/edit/closetag.js"></script>
+    <script src="js/lib/CodeMirror/addon/edit/closebrackets.js"></script>
+    <script src="js/lib/CodeMirror/addon/wrap/hardwrap.js"></script>
+    <script src="js/lib/Clipboard/clipboard.js"></script>
+  </head>
+  <body>
     <style>
-        body{
-            background-color: #222;
-            color: white;
-        }
-        .scriptxt{
-            resize:none;
-        }
-        .CodeMirror{
-            border: solid 1px #aaa;
-            border-radius: 10px;
-        }
+      body {
+        background-color: #222;
+        color: white;
+      }
+      .scriptxt {
+        resize: none;
+      }
+      .CodeMirror {
+        border: solid 1px #aaa;
+        border-radius: 10px;
+      }
     </style>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-12 text-center mt-4">
-                <h1 class="mt-4">Javascript Obfuscator</h1>
-            </div>
-            
-            <div class="col-lg-5">
-                <div class="form-group">
-                    <label for="scriptOriginal">Script para ofuscar</label>
-                    <textarea class="form-control scriptxt" id="scriptOriginal" rows="13"></textarea>
-                  </div>
-            </div>
+    <main class="container">
+      <div class="row justify-content-center">
+        <header class="col-lg-12 text-center mt-4">
+          <h1 class="mt-4">Javascript Obfuscator</h1>
+        </header>
 
-            <div class="col-lg-2 my-auto">
-                <button class="btn btn-block btn-primary" id="ofuscar">
-                    Ofuscar
-                </button>
+        <section class="col-lg-5">
+          <div class="form-group">
+            <label for="scriptOriginal">Script para ofuscar</label>
+            <textarea
+              class="form-control scriptxt"
+              id="scriptOriginal"
+              rows="13"
+            ></textarea>
+          </div>
+        </section>
 
-                <button class="btn btn-block btn-success" id="copiar">
-                    Copiar
-                </button>
+        <section class="col-lg-2 my-auto">
+          <button class="btn btn-block btn-primary" id="ofuscar">
+            Ofuscar
+          </button>
 
-                <a class="btn btn-block btn-light" target="blank" href="https://github.com/leodhb/js-obfuscator">
-                    GitHub
-                </a>
+          <button class="btn btn-block btn-success" id="copiar">Copiar</button>
 
+          <a
+            class="btn btn-block btn-light"
+            target="blank"
+            href="https://github.com/leodhb/js-obfuscator"
+          >
+            GitHub
+          </a>
+        </section>
 
+        <section class="col-lg-5">
+          <div class="form-group">
+            <label for="scriptOfuscado">Script ofuscado</label>
+            <textarea
+              class="form-control scriptxt"
+              id="scriptOfuscado"
+              rows="13"
+            ></textarea>
+          </div>
+        </section>
 
-            </div>
+        <footer class="row">
+          <div class="col-lg-12 text-center">
+            <h1 class="mt-4">Como funciona?</h1>
+            <p>
+              O JavaScript Obfuscator usa a Biblioteca HunterObfuscator para
+              gerar um código difícil de entender mas que, por baixo dos panos,
+              é a mesma coisa.
+            </p>
 
-            <div class="col-lg-5">
-                <div class="form-group">
-                    <label for="scriptOfuscado">Script ofuscado</label>
-                    <textarea class="form-control scriptxt" id="scriptOfuscado" rows="13"></textarea>
-                  </div>
-            </div>
+            <p>
+              O HunterObfuscator é um algoritmo de ofuscaçao de código
+              javascript escrito em PHP, que se utiliza de um algorítmo próprio
+              de hash e salt, que no final gera uma cadeia de manupulaçao de
+              Strings muito complicado de reverter.
+            </p>
 
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h1 class="mt-4">Como funciona?</h1>
-                    <p>O JavaScript Obfuscator usa a Biblioteca HunterObfuscator para gerar um código
-                         difícil de entender mas que, por baixo dos panos, é a mesma coisa.</p>
-                    
-                     <p>O HunterObfuscator é um algoritmo de ofuscaçao de código javascript escrito em PHP, que
-                        se utiliza de um algorítmo próprio de hash e salt, que no final gera uma cadeia de manupulaçao de
-                        Strings muito complicado de reverter.
-                    </p>
-
-                    <p>Este website é uma interface gráfica para o algoritmo. Que se comunica via AJAX com o backend e
-                       codifica os requests e responses usando base64 (para evitar possíveis error envolvendo aspas e afins).
-                    </p>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="js/scripts.js"></script>
-</body>
+            <p>
+              Este website é uma interface gráfica para o algoritmo. Que se
+              comunica via AJAX com o backend e codifica os requests e responses
+              usando base64 (para evitar possíveis error envolvendo aspas e
+              afins).
+            </p>
+          </div>
+        </footer>
+      </div>
+    </main>
+    <script type="module" src="js/scripts.js"></script>
+  </body>
 </html>
